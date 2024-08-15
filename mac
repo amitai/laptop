@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Welcome to the CLIR/DLF laptop script.
+# Welcome to the FF laptop script.
 
 green=$(tput setaf 2)
 normal=$(tput sgr0)
@@ -87,9 +87,6 @@ if ! command -v brew >/dev/null; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-fancy_echo "Installing Rosetta..."
-softwareupdate --install-rosetta --agree-to-license
-
 if brew list | grep -Fq brew-cask; then
   fancy_echo "Uninstalling old Homebrew-Cask ..."
   brew uninstall --force brew-cask
@@ -104,34 +101,20 @@ brew "gpg"
 brew "ack"
 brew "curl"
 brew "git"
-brew "openssl"
-brew "the_silver_searcher"
 brew "vim"
 brew "zsh"
 
 # Applications
-cask "asana"
-cask "box-drive"
-cask "box-tools"
 cask "adobe-creative-cloud"
-cask "firefox"
-cask "google-chrome"
-cask "iterm2"
-cask "1password"
-cask "libreoffice"
+cask "microsoft-edge"
 cask "microsoft-office"
-cask "slack"
-cask "visual-studio-code"
 cask "zoom"
+cask intune-company-portal
+cask microsoft-teams
+cask displaylink
+cask nordlayer
+cask dockutil
 EOF
-
-# Configure Ruby
-fancy_echo "Configuring Bundler..."
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
-
-fancy_echo "Installing oh my zsh"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."

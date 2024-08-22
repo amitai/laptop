@@ -168,4 +168,3 @@ defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
 defaults write com.microsoft.office ShowWhatsNewOnLaunch -bool false
 defaults write com.microsoft.office ShowDocStageOnLaunch -bool false
 defaults write com.microsoft.Outlook HideCanAddOtherAccountTypesTipText -bool true
-

@@ -113,7 +113,7 @@ cask intune-company-portal
 cask microsoft-teams
 cask displaylink
 cask nordlayer
-cask dockutil
+dockutil
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then

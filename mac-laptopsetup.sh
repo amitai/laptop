@@ -137,7 +137,6 @@ dockutil --add /Applications/Microsoft\ Excel.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ PowerPoint.app > /dev/null 2>&1
 
 # Notifications: extend banner display time
-
 defaults write com.apple.notificationcenterui bannerTime 10
 
 # Finder: show extensions
@@ -176,6 +175,3 @@ defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
 defaults write com.microsoft.office ShowWhatsNewOnLaunch -bool false
 defaults write com.microsoft.office ShowDocStageOnLaunch -bool false
 defaults write com.microsoft.Outlook HideCanAddOtherAccountTypesTipText -bool true
-
-# Notify that the job is done
-osascript -e 'display notification "The script is done running." with title "FF Laptop Script"'

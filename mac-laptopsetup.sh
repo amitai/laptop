@@ -126,6 +126,7 @@ fancy_echo "Now getting ready to apply default settings."
 # Dock: Remove everything and add our default apps
 dockutil --remove all > /dev/null 2>&1
 dockutil --add /System/Applications/Launchpad.app > /dev/null 2>&1
+dockutil --add /Applications/Utilities/Adobe\ Creative\ Cloud/ACC/Creative\ Cloud.app > /dev/null 2>&1
 dockutil --add /System/Applications/System\ Settings.app > /dev/null 2>&1
 dockutil --add /Applications/Safari.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ Outlook.app > /dev/null 2>&1

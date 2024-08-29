@@ -171,6 +171,9 @@ defaults write com.apple.terminal StringEncodings -array 4
 defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
 defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
 
+# Prompt
+append_to_zshrc 'export PS1="%{$(tput setaf 34)%}%n%{$(tput setaf 40)%} %{$(tput setaf 154)%}%1~ %{$(tput sgr0)%}$ "'
+
 # MS Office
 defaults write com.microsoft.office ShowWhatsNewOnLaunch -bool false
 defaults write com.microsoft.office ShowDocStageOnLaunch -bool false

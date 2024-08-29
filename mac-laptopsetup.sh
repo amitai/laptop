@@ -95,7 +95,7 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 
-brew bundle --file=- <<EOF
+brew -v bundle --file=- <<EOF
 # Unix
 brew "gpg"
 brew "ack"

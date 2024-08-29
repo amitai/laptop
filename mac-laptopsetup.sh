@@ -135,6 +135,10 @@ dockutil --add /Applications/Microsoft\ Word.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ Excel.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ PowerPoint.app > /dev/null 2>&1
 
+# Notifications: extend banner display time
+
+defaults write com.apple.notificationcenterui bannerTime 10
+
 # Finder: show extensions
 defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true" 
 
@@ -143,6 +147,9 @@ defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv"
 
 # Finder: no iCloud by default
 defaults write NSGlobalDomain "NSDocumentSaveNewDocumentsToCloud" -bool "false"
+
+# Finder: large sidebar icon
+defaults write NSGlobalDomain "NSTableViewDefaultSizeMode" -int "3" && killall Finder
 
 # Trackpad: Tap
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
@@ -169,3 +176,5 @@ defaults write com.microsoft.office ShowWhatsNewOnLaunch -bool false
 defaults write com.microsoft.office ShowDocStageOnLaunch -bool false
 defaults write com.microsoft.Outlook HideCanAddOtherAccountTypesTipText -bool true
 
+# Notify that the job is done
+osascript -e 'display notification "The script is done running." with title "FF Laptop Script"'

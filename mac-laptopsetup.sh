@@ -103,17 +103,17 @@ brew "curl"
 brew "git"
 brew "vim"
 brew "zsh"
+brew "dockutil"
 
 # Applications
 cask "adobe-creative-cloud"
 cask "microsoft-edge"
 cask "microsoft-office"
 cask "zoom"
-cask intune-company-portal
-cask microsoft-teams
-cask displaylink
-cask nordlayer
-dockutil
+cask "intune-company-portal"
+cask "microsoft-teams"
+cask "displaylink"
+cask "nordlayer"
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then

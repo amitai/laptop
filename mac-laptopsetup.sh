@@ -2,23 +2,13 @@
 
 # Welcome to the FF laptop script.
 
-green=$(tput setaf 2)
-normal=$(tput sgr0)
-
-fancy_echo() {
-  local fmt="$1"; shift
-
-  # shellcheck disable=SC2059
-  printf "${green}\\n$fmt\\n${normal}" "$@"
-}
-
 append_to_zprofile() {
   local text="$1"
   
   local file="$HOME/.zprofile"
 
   if ! grep -Fqs "$text" "$file"; then
-    fancy_echo "Appending '$text' to $file"
+    echo "Appending '$text' to $file"
     echo "$text" >> "$file"
   fi
 }
@@ -71,7 +61,7 @@ else
 fi
 
 if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew ..."
+  echo "Installing Homebrew ..."
     NONINTERACTIVE=1 /bin/bash -c \
       "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -88,11 +78,11 @@ if ! command -v brew >/dev/null; then
 fi
 
 if brew list | grep -Fq brew-cask; then
-  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  echo "Uninstalling old Homebrew-Cask ..."
   brew uninstall --force brew-cask
 fi
 
-fancy_echo "Updating Homebrew formulae ..."
+echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 
 brew -v bundle --file=- <<EOF
@@ -114,14 +104,19 @@ cask "intune-company-portal"
 cask "microsoft-teams"
 cask "displaylink"
 cask "nordlayer"
+
+# Fonts
+cask "font-source-serif-4"
+
+
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
-  fancy_echo "Running your customizations from ~/.laptop.local ..."
+  echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
-fancy_echo "Now getting ready to apply default settings."
+echo "Now getting ready to apply default settings."
 
 # Dock: Remove everything and add our default apps
 dockutil --remove all > /dev/null 2>&1
@@ -135,6 +130,7 @@ dockutil --add /Applications/Microsoft\ Teams.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ Word.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ Excel.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ PowerPoint.app > /dev/null 2>&1
+dockutil --add /System/Applications/Weather.app > /dev/null 2>&1
 
 # Notifications: extend banner display time
 defaults write com.apple.notificationcenterui bannerTime 10
@@ -172,7 +168,7 @@ defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
 defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
 
 # Prompt
-append_to_zshrc 'export PS1="%{$(tput setaf 34)%}%n%{$(tput setaf 40)%} %{$(tput setaf 154)%}%1~ %{$(tput sgr0)%}$ "'
+append_to_zshrc 'PROMPT="%B%K{black}%F{40}➜%f%k%b%K{black} %k%K{black}    %k%K{black}%F{cyan}%~%f%k "'
 
 # MS Office
 defaults write com.microsoft.office ShowWhatsNewOnLaunch -bool false

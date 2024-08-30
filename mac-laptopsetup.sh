@@ -98,16 +98,8 @@ echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 
 brew -v bundle --file=- <<EOF
-# Unix
-brew "gpg"
-brew "ack"
-brew "curl"
-brew "git"
-brew "vim"
-brew "zsh"
-brew "dockutil"
 
-# Applications
+brew "dockutil"
 cask "adobe-creative-cloud"
 cask "microsoft-edge"
 cask "microsoft-office"
@@ -117,10 +109,6 @@ cask "microsoft-teams"
 cask "displaylink"
 cask "nordlayer"
 cask "google-chrome"
-
-# Fonts
-cask "font-source-serif-4"
-
 
 EOF
 

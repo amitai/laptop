@@ -32,9 +32,21 @@ append_to_zshrc() {
   fi
 }
 
+
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until script has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
+# exit on error
 set -e
 
 if [ ! -d "$HOME/.bin/" ]; then
@@ -104,6 +116,7 @@ cask "intune-company-portal"
 cask "microsoft-teams"
 cask "displaylink"
 cask "nordlayer"
+cask "google-chrome"
 
 # Fonts
 cask "font-source-serif-4"
@@ -117,6 +130,16 @@ if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 echo "Now getting ready to apply default settings."
+
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
+
+# Dock behavior modifications
+defaults write com.apple.dock "tilesize" -int "36"
+defaults write com.apple.dock showhidden -bool true
+
 
 # Dock: Remove everything and add our default apps
 dockutil --remove all > /dev/null 2>&1
@@ -174,3 +197,48 @@ append_to_zshrc 'PROMPT="%B%K{black}%F{40}➜%f%k%b%K{black} %k%K{black}    %k%K
 defaults write com.microsoft.office ShowWhatsNewOnLaunch -bool false
 defaults write com.microsoft.office ShowDocStageOnLaunch -bool false
 defaults write com.microsoft.Outlook HideCanAddOtherAccountTypesTipText -bool true
+
+# Safari
+defaults write com.apple.Safari "ShowFullURLInSmartSearchField" -bool "true" 
+defaults write com.apple.Safari HomePage -string "about:blank"
+defaults write com.apple.Safari ShowFavoritesBar -bool false
+defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+
+
+# Disable transparency in the menu bar and elsewhere on Yosemite
+defaults write com.apple.universalaccess reduceTransparency -bool true
+
+# Always show scrollbars. Possible values: `WhenScrolling`, `Automatic` and `Always`
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+
+# Expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+# Expand print panel by default
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+# Enable full keyboard access for all controls
+# (e.g. enable Tab in modal dialogs)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Sleep the display after 15 minutes
+sudo pmset -a displaysleep 15
+
+# Disable machine sleep while charging
+sudo pmset -c sleep 0
+
+# Use plain text mode for new TextEdit documents
+defaults write com.apple.TextEdit RichText -int 0
+
+# Open and save files as UTF-8 in TextEdit
+defaults write com.apple.TextEdit PlainTextEncoding -int 4
+defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+
+# Chrome - Use the system-native print preview dialog
+defaults write com.google.Chrome DisablePrintPreview -bool true
+defaults write com.google.Chrome.canary DisablePrintPreview -bool true
+defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
+defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool true

@@ -100,6 +100,13 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew -v bundle --file=- <<EOF
 
 brew "dockutil"
+brew "curl"
+brew "wget"
+brew "git"
+brew "openssl"
+brew "vim"
+brew "zsh"
+
 cask "adobe-creative-cloud"
 cask "microsoft-edge"
 cask "microsoft-office"
@@ -109,6 +116,8 @@ cask "microsoft-teams"
 cask "displaylink"
 cask "nordlayer"
 cask "google-chrome"
+cask "alt-tab"
+
 
 EOF
 
@@ -123,16 +132,13 @@ echo "Now getting ready to apply default settings."
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
 
-
 # Dock behavior modifications
 defaults write com.apple.dock "tilesize" -int "36"
 defaults write com.apple.dock showhidden -bool true
 
-
 # Dock: Remove everything and add our default apps
 dockutil --remove all > /dev/null 2>&1
 dockutil --add /System/Applications/Launchpad.app > /dev/null 2>&1
-dockutil --add /Applications/Utilities/Adobe\ Creative\ Cloud/ACC/Creative\ Cloud.app > /dev/null 2>&1
 dockutil --add /System/Applications/System\ Settings.app > /dev/null 2>&1
 dockutil --add /Applications/Safari.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ Outlook.app > /dev/null 2>&1
@@ -141,6 +147,7 @@ dockutil --add /Applications/Microsoft\ Teams.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ Word.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ Excel.app > /dev/null 2>&1
 dockutil --add /Applications/Microsoft\ PowerPoint.app > /dev/null 2>&1
+dockutil --add /Applications/Utilities/Adobe\ Creative\ Cloud/ACC/Creative\ Cloud.app > /dev/null 2>&1
 dockutil --add /System/Applications/Weather.app > /dev/null 2>&1
 
 # Notifications: extend banner display time
@@ -179,9 +186,12 @@ defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
 defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
 
 # Prompt
-append_to_zshrc 'PROMPT="%B%K{black}%F{40}➜%f%k%b%K{black} %k%K{black}    %k%K{black}%F{cyan}%~%f%k "'
+append_to_zshrc 'PROMPT="➜  %~ "'
 
 # MS Office
 defaults write com.microsoft.office ShowWhatsNewOnLaunch -bool false
 defaults write com.microsoft.office ShowDocStageOnLaunch -bool false
 defaults write com.microsoft.Outlook HideCanAddOtherAccountTypesTipText -bool true
+
+# Background image
+osascript -e 'tell application "System Events" to set picture of every desktop to ("/System/Library/Desktop Pictures/Solid Colors/Stone.png" as POSIX file)'

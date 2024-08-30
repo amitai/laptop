@@ -106,18 +106,19 @@ brew "git"
 brew "openssl"
 brew "vim"
 brew "zsh"
+brew "sqlite"
+brew "watch"
 
 cask "adobe-creative-cloud"
 cask "microsoft-edge"
 cask "microsoft-office"
-cask "zoom"
 cask "intune-company-portal"
 cask "microsoft-teams"
+cask "zoom"
 cask "displaylink"
 cask "nordlayer"
 cask "google-chrome"
 cask "alt-tab"
-
 
 EOF
 

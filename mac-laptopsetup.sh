@@ -33,6 +33,10 @@ append_to_zshrc() {
 }
 
 
+LOG_FILE="$HOME/setup.log"
+exec > >(tee -a "$LOG_FILE") 2>&1
+echo "Starting setup script at $(date)"
+
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
@@ -122,19 +126,8 @@ cask "alt-tab"
 
 EOF
 
-if [ -f "$HOME/.laptop.local" ]; then
-  echo "Running your customizations from ~/.laptop.local ..."
-  # shellcheck disable=SC1090
-  . "$HOME/.laptop.local"
-fi
-echo "Now getting ready to apply default settings."
-
-# Close any open System Preferences panes, to prevent them from overriding
-# settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
-
 # Dock behavior modifications
-defaults write com.apple.dock "tilesize" -int "36"
+defaults write com.apple.dock "tilesize" -int "44"
 defaults write com.apple.dock showhidden -bool true
 
 # Dock: Remove everything and add our default apps
@@ -196,3 +189,5 @@ defaults write com.microsoft.Outlook HideCanAddOtherAccountTypesTipText -bool tr
 
 # Background image
 osascript -e 'tell application "System Events" to set picture of every desktop to ("/System/Library/Desktop Pictures/Solid Colors/Stone.png" as POSIX file)'
+
+echo "Setup script completed at $(date)"

@@ -104,14 +104,6 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew -v bundle --file=- <<EOF
 
 brew "dockutil"
-brew "curl"
-brew "wget"
-brew "git"
-brew "openssl"
-brew "vim"
-brew "zsh"
-brew "sqlite"
-brew "watch"
 
 cask "adobe-creative-cloud"
 cask "microsoft-edge"
@@ -122,7 +114,6 @@ cask "zoom"
 cask "displaylink"
 cask "nordlayer"
 cask "google-chrome"
-cask "alt-tab"
 
 EOF
 
